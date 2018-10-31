@@ -32,10 +32,10 @@ const BookType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-        book: BookType, /** This is a query for book */
-        args: {
-            id: { type: GraphQLString }, /** User should pass the argument along, when there's a query for book */
-            resolve(parent, args) {
+        book: {
+            type: BookType, /** This is a query for book */
+            args: { id: { type: GraphQLString } }, /** User should pass the argument along, when there's a query for book */
+            resolve: (parent, args) => {
                 /**
                  * This gets the data from db or any other source
                  * @param args will have the `id` field as described above

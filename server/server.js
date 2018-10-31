@@ -13,7 +13,8 @@ const app = express()
 
 
 app.use('/graphql', graphqlIHTTP({
-    schema
+    schema,
+    graphiql: true
 }))
 
 app.listen(PORT, () => console.log(`Server is listening at port ${PORT}`))
