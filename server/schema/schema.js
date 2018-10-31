@@ -3,8 +3,16 @@
  */
 
 const graphql = require('graphql')
+const _ = require('lodash')
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql
+
+/** Dummy Data for Books */
+const books = [
+  { name: "Name of the Wind", genre: "Fantasy", id: '1' },
+  { name: "The Final Empire", genre: "Fantasy", id: '2' },
+  { name: "The Long Earth", genre: 'Sci-Fi', id: '3' }
+];
 
 /**
  * Book schema, this is more like defining a new type, a struct or interface
@@ -32,6 +40,8 @@ const RootQuery = new GraphQLObjectType({
                  * This gets the data from db or any other source
                  * @param args will have the `id` field as described above
                  */
+                const { id } = args
+                return _.find(books, { id })
             }
         }
     }
