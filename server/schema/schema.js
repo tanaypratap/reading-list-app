@@ -5,7 +5,7 @@
 const graphql = require('graphql')
 const _ = require('lodash')
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql
+const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID } = graphql
 
 /** Dummy Data for Books */
 const books = [
@@ -20,7 +20,7 @@ const books = [
 const BookType = new GraphQLObjectType({
     name: 'Book',
     fields: () => ({
-        id: { type: GraphQLString },
+        id: { type: GraphQLID },
         name: { type: GraphQLString },
         genre: { type: GraphQLString }
     })
@@ -34,13 +34,14 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         book: {
             type: BookType, /** This is a query for book */
-            args: { id: { type: GraphQLString } }, /** User should pass the argument along, when there's a query for book */
+            args: { id: { type: GraphQLID } }, /** User should pass the argument along, when there's a query for book */
             resolve: (parent, args) => {
                 /**
                  * This gets the data from db or any other source
                  * @param args will have the `id` field as described above
                  */
                 const { id } = args
+                console.log(typeof(id))
                 return _.find(books, { id })
             }
         }
