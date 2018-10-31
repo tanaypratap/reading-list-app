@@ -5,13 +5,15 @@
 const express = require('express')
 const graphqlIHTTP = require('express-graphql')
 
+const schema = require('./schema/schema')
+
 const PORT = 3000
 
 const app = express()
 
 
 app.use('/graphql', graphqlIHTTP({
-
+    schema
 }))
 
 app.listen(PORT, () => console.log(`Server is listening at port ${PORT}`))
