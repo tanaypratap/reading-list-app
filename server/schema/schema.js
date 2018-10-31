@@ -56,8 +56,15 @@ const RootQuery = new GraphQLObjectType({
                  * @param args will have the `id` field as described above
                  */
                 const { id } = args
-                console.log(typeof(id))
                 return _.find(books, { id })
+            }
+        },
+        author: {
+            type: AuthorType,
+            args: { id: { type: GraphQLID }},
+            resolve: (parent, args) => {
+                const { id } = args
+                return _.find(authors, { id })
             }
         }
     }
