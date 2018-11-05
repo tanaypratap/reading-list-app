@@ -25,7 +25,7 @@ const authors = [
  */
 const BookType = new GraphQLObjectType({
     name: 'Book',
-    fields: () => ({
+    fields: () => ({ /** Function wrapping to execute it later, otherwise AuthortType will error out */
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         genre: { type: GraphQLString },
