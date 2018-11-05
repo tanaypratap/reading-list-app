@@ -6,6 +6,7 @@ const express = require('express')
 const graphqlIHTTP = require('express-graphql')
 const mongoose = require('mongoose')
 const env = require('dotenv')
+const cors = require('cors')
 
 
 const schema = require('./schema/schema')
@@ -13,6 +14,9 @@ const schema = require('./schema/schema')
 env.load();
 
 const app = express()
+
+// allow cross-origin request
+app.use(cors())
 
 // connect to mLab DB
 // need to put db string with your creds to run in .env file
