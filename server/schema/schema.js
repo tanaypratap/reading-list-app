@@ -8,7 +8,13 @@ const _ = require('lodash')
 const Book = require('../models/book.model')
 const Author = require('../models/author.model')
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList  } = graphql
+const { GraphQLObjectType, 
+    GraphQLString,
+    GraphQLSchema,
+    GraphQLID,
+    GraphQLInt,
+    GraphQLList,
+    GraphQLNonNull  } = graphql
 
 /**
  * Book schema, this is more like defining a new type, a struct or interface
@@ -79,38 +85,38 @@ const RootQuery = new GraphQLObjectType({
 })
 
 const Mutation = new GraphQLObjectType({
-    name: 'Mutation',
-    fields: {
-        addAuthor: {
-            type: AuthorType,
-            args: {
-                name: { type: GraphQLString },
-                age: { type: GraphQLInt }
-            },
-            resolve(parent, args){
-                let author = new Author({
-                    ...args
-                })
-                return author.save()
-            }
-        },
+  name: "Mutation",
+  fields: {
+    addAuthor: {
+      type: AuthorType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) }
+      },
+      resolve(parent, args) {
+        let author = new Author({
+          ...args
+        });
+        return author.save();
+      }
+    },
 
-        addBook: {
-            type: BookType,
-            args: {
-                name: { type: GraphQLString },
-                genre: { type: GraphQLString },
-                authorId: { type: GraphQLID }
-            },
-            resolve(_, args) {
-                let book = new Book({
-                    ...args
-                })
-                return book.save()
-            }
-        }
+    addBook: {
+      type: BookType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        genre: { type: new GraphQLNonNull(GraphQLString) },
+        authorId: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(_, args) {
+        let book = new Book({
+          ...args
+        });
+        return book.save();
+      }
     }
-})
+  }
+});
 
 /**
  * Declaring the schema and exporting it
