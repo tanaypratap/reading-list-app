@@ -5,6 +5,9 @@
 const graphql = require('graphql')
 const _ = require('lodash')
 
+const Book = require('../models/book.model')
+const Author = require('../models/author.model')
+
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList  } = graphql
 
 /** Dummy Data for Books */

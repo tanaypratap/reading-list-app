@@ -14,11 +14,11 @@ env.load();
 
 const app = express()
 
-
+// connect to mLab DB
+// need to put db string with your creds to run in .env file
 mongoose.connect(process.env.MONGO_CONN_URL);
-
 mongoose.connection.once('open', () => {
-    console.log('MongoDB is connected')
+    console.log('Connection to mLab successful!')
 })
 app.use('/graphql', graphqlIHTTP({
     schema,
