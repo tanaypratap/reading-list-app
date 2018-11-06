@@ -8,21 +8,14 @@ const _ = require('lodash')
 const Book = require('../models/book.model')
 const Author = require('../models/author.model')
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList  } = graphql
+const { GraphQLObjectType, 
+    GraphQLString,
+    GraphQLSchema,
+    GraphQLID,
+    GraphQLInt,
+    GraphQLList,
+    GraphQLNonNull  } = graphql
 
-// /** Dummy Data for Books & Authors */
-// const books = [
-//   { name: "Name of the Wind", genre: "Fantasy", id: '1', authorId: '1' },
-//     { name: "The Final Empire", genre: "Fantasy", id: '2', authorId: '2'  },
-//     { name: "The Long Earth", genre: 'Sci-Fi', id: '3', authorId: '3' }
-// ];
-
-
-// const authors = [
-//   { name: "Patrick Rothfuss", age: 44, id: "1" },
-//   { name: "Brandon Sanderson", age: 42, id: "2" },
-//   { name: "Terry Pratchett", age: 66, id: "3" }
-// ];
 /**
  * Book schema, this is more like defining a new type, a struct or interface
  */
@@ -34,8 +27,8 @@ const BookType = new GraphQLObjectType({
         genre: { type: GraphQLString },
         author: {
             type: AuthorType,
-            resolve(parent, args){
-                // return _.find(authors, { id: parent.authorId })
+            resolve(parent, _){
+               return  Author.findOne({ _id: parent.authorId })
             }
         }
     })
@@ -49,8 +42,8 @@ const AuthorType = new GraphQLObjectType({
         age: { type: GraphQLInt },
         books: {
             type: new GraphQLList(BookType),
-            resolve(parent, args) {
-                // return _.filter(books, { authorId: parent.id})
+            resolve(parent, _) {
+                return Book.find({ authorId: parent.id })
             }
         }
     })
@@ -65,41 +58,70 @@ const RootQuery = new GraphQLObjectType({
         book: {
             type: BookType, /** This is a query for book */
             args: { id: { type: GraphQLID } }, /** User should pass the argument along, when there's a query for book */
-            resolve: (parent, args) => {
-                /**
-                 * This gets the data from db or any other source
-                 * @param args will have the `id` field as described above
-                 */
-                // const { id } = args
-                // return _.find(books, { id })
+            resolve: (_, args) => {
+              return Book.findOne({ _id: args.id })
             }
         },
         author: {
             type: AuthorType,
             args: { id: { type: GraphQLID }},
-            resolve: (parent, args) => {
-                const { id } = args
-                // return _.find(authors, { id })
+            resolve: (_, args) => {
+               return Author.findOne({ _id: args.id })
             }
         },
         books: {
             type: new GraphQLList(BookType),
-            resolve(parent, args){
-                // return books
+            resolve(_, args){
+              return Book.find({})
             }
         },
         authors: {
             type: new GraphQLList(AuthorType),
             resolve(){
-                // return authors
+             return Author.find({})
             }
         }
     }
 })
 
+const Mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addAuthor: {
+      type: AuthorType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        age: { type: new GraphQLNonNull(GraphQLInt) }
+      },
+      resolve(parent, args) {
+        let author = new Author({
+          ...args
+        });
+        return author.save();
+      }
+    },
+
+    addBook: {
+      type: BookType,
+      args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        genre: { type: new GraphQLNonNull(GraphQLString) },
+        authorId: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(_, args) {
+        let book = new Book({
+          ...args
+        });
+        return book.save();
+      }
+    }
+  }
+});
+
 /**
  * Declaring the schema and exporting it
  */
 module.exports = new GraphQLSchema({ 
-    query: RootQuery
+    query: RootQuery,
+    mutation: Mutation
 })
