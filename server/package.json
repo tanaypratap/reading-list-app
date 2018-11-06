@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Demo app using react with graphql and apollo",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanaypratap/graphql-apollo-demo.git"
+  },
+  "keywords": [
+    "react",
+    "graphql",
+    "apollo"
+  ],
+  "author": "Tanay Pratap",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tanaypratap/graphql-apollo-demo/issues"
+  },
+  "homepage": "https://github.com/tanaypratap/graphql-apollo-demo#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.5"
+  }
+}
