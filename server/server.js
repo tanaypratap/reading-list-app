@@ -29,4 +29,6 @@ app.use('/graphql', graphqlIHTTP({
     graphiql: true
 }))
 
+// set port in .env file or env variable as PORT,
+// avoid 3000 as client uses that port
 app.listen(process.env.PORT, () => console.log(`Server is listening at port ${process.env.PORT}`))
