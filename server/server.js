@@ -4,17 +4,25 @@
 
 const express = require('express')
 const graphqlIHTTP = require('express-graphql')
+const mongoose = require('mongoose')
+const env = require('dotenv')
+
 
 const schema = require('./schema/schema')
 
-const PORT = 3000
+env.load();
 
 const app = express()
 
-
+// connect to mLab DB
+// need to put db string with your creds to run in .env file
+mongoose.connect(process.env.MONGO_CONN_URL);
+mongoose.connection.once('open', () => {
+    console.log('Connection to mLab successful!')
+})
 app.use('/graphql', graphqlIHTTP({
     schema,
     graphiql: true
 }))
 
-app.listen(PORT, () => console.log(`Server is listening at port ${PORT}`))
+app.listen(process.env.PORT, () => console.log(`Server is listening at port ${process.env.PORT}`))

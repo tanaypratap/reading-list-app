@@ -5,21 +5,24 @@
 const graphql = require('graphql')
 const _ = require('lodash')
 
+const Book = require('../models/book.model')
+const Author = require('../models/author.model')
+
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList  } = graphql
 
-/** Dummy Data for Books */
-const books = [
-  { name: "Name of the Wind", genre: "Fantasy", id: '1', authorId: '1' },
-    { name: "The Final Empire", genre: "Fantasy", id: '2', authorId: '2'  },
-    { name: "The Long Earth", genre: 'Sci-Fi', id: '3', authorId: '3' }
-];
+// /** Dummy Data for Books & Authors */
+// const books = [
+//   { name: "Name of the Wind", genre: "Fantasy", id: '1', authorId: '1' },
+//     { name: "The Final Empire", genre: "Fantasy", id: '2', authorId: '2'  },
+//     { name: "The Long Earth", genre: 'Sci-Fi', id: '3', authorId: '3' }
+// ];
 
 
-const authors = [
-  { name: "Patrick Rothfuss", age: 44, id: "1" },
-  { name: "Brandon Sanderson", age: 42, id: "2" },
-  { name: "Terry Pratchett", age: 66, id: "3" }
-];
+// const authors = [
+//   { name: "Patrick Rothfuss", age: 44, id: "1" },
+//   { name: "Brandon Sanderson", age: 42, id: "2" },
+//   { name: "Terry Pratchett", age: 66, id: "3" }
+// ];
 /**
  * Book schema, this is more like defining a new type, a struct or interface
  */
@@ -32,7 +35,7 @@ const BookType = new GraphQLObjectType({
         author: {
             type: AuthorType,
             resolve(parent, args){
-                return _.find(authors, { id: parent.authorId })
+                // return _.find(authors, { id: parent.authorId })
             }
         }
     })
@@ -47,7 +50,7 @@ const AuthorType = new GraphQLObjectType({
         books: {
             type: new GraphQLList(BookType),
             resolve(parent, args) {
-                return _.filter(books, { authorId: parent.id})
+                // return _.filter(books, { authorId: parent.id})
             }
         }
     })
@@ -67,8 +70,8 @@ const RootQuery = new GraphQLObjectType({
                  * This gets the data from db or any other source
                  * @param args will have the `id` field as described above
                  */
-                const { id } = args
-                return _.find(books, { id })
+                // const { id } = args
+                // return _.find(books, { id })
             }
         },
         author: {
@@ -76,19 +79,19 @@ const RootQuery = new GraphQLObjectType({
             args: { id: { type: GraphQLID }},
             resolve: (parent, args) => {
                 const { id } = args
-                return _.find(authors, { id })
+                // return _.find(authors, { id })
             }
         },
         books: {
             type: new GraphQLList(BookType),
             resolve(parent, args){
-                return books
+                // return books
             }
         },
         authors: {
             type: new GraphQLList(AuthorType),
             resolve(){
-                return authors
+                // return authors
             }
         }
     }
