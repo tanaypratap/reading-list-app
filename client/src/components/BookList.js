@@ -10,23 +10,28 @@ class BookList extends Component {
     }
     render() {
         const { loading, books } = this.props.data
-        return (
-            <div>
-                {
-                    loading && <div> Loading Books.. </div>
-                }
-                <ul id="book-list">
-                {
-                    !loading && books.map(book => (<li key={book.id} onClick={ (e) => this.setState({ selectedBook: book.id }) }>{book.name}</li>))
-                }
-                </ul>
-                {
-                    this.state.selectedBook &&
-                    <BookDetails bookId={this.state.selectedBook} />
-                }
-                
-             </div >
-        );
+        return <div>
+            {loading && <div> Loading Books.. </div>}
+            <ul id="book-list">
+              {!loading && books.map(book => (
+                  <li
+                    key={book.id}
+                    style={{
+                      backgroundColor:
+                        this.state.selectedBook === book.id
+                          ? "#cbbcc4"
+                          : "#eee"
+                    }}
+                    onClick={e =>
+                      this.setState({ selectedBook: book.id })
+                    }
+                  >
+                    {book.name}
+                  </li>
+                ))}
+            </ul>
+            {this.state.selectedBook && <BookDetails bookId={this.state.selectedBook} />}
+          </div>;
     }
 }
 
