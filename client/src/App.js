@@ -15,8 +15,8 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <div id="Main">
-          <h1>Ninja's Reading List</h1>
+        <div id="main">
+          <h1> Reading List</h1>
           <BookList />
           <AddBook />
         </div>
