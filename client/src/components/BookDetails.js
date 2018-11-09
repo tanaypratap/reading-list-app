@@ -10,12 +10,12 @@ class BookDetails extends React.Component {
                 
                { book && <div>
                     <h2> { book.name } </h2>
-                    <p> { book.genre } </p>
-                    <p> { book.author.name } </p>
-                    <h4> Other Books from the author </h4>
+                    <p> Genre: <strong> {book.genre} </strong> </p>
+                    <p> Author: <strong> {book.author.name} </strong> </p>
+                    <h3> Books from same author </h3>
                     <ul className="other-books">
                         {
-                            book.author.books.map(book => <li key={book.id}> { book.name } </li>)
+                            book.author.books.map(book => <li key={book.id} style={{ margin: '5px', padding: '5px' }}> { book.name } </li>)
                         }
                     </ul>
                 </div>}
