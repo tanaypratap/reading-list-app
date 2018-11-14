@@ -1,16 +1,16 @@
-import React, { Component } from "react";
+import React, { Component, FormEvent } from "react";
 import { graphql, compose } from "react-apollo";
 
 import { getAuthorsQuery, addBookMutation, getBooksQuery } from '../queries/queries';
 
-class AddBook extends Component {
+class AddBook extends Component<{addBookMutation: any, getAuthorsQuery: any}, { name: string, genre: string, authorId: string}> {
     state = {
         name: '',
         genre: '',
         authorId: ''
     }
 
-    submitForm = (event) => {
+    submitForm = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         this.props.addBookMutation({ 
             variables: {
@@ -38,7 +38,7 @@ class AddBook extends Component {
                 <div className="field">
                   <label> Author: </label>
                     <select onChange={(e) => this.setState({ authorId: e.target.value })}>
-                    {authors.map(author => (
+                    {authors.map((author: any) => (
                       <option key={author.id} value={author.id}> {author.name} </option>
                     ))}
                   </select>
