@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { graphql } from "react-apollo";
+import { graphql, ChildDataProps } from "react-apollo";
 
 import { getBooksQuery } from "../queries/queries";
 import BookDetails from './BookDetails';
+import { Response } from './components.interface'
 
-class BookList extends Component {
+class BookList extends Component<ChildDataProps<{}, Response>, {selectedBook: string}> {
     state = {
-        selectedBook: null
+        selectedBook: ''
     }
     render() {
         const { loading, books } = this.props.data
         return <div>
             {loading && <div> Loading Books.. </div>}
             <ul id="book-list">
-              {!loading && books.map(book => (
+              {!loading && books && books.map((book) => (
                   <li
                     key={book.id}
                     style={{
@@ -26,13 +27,14 @@ class BookList extends Component {
                       this.setState({ selectedBook: book.id })
                     }
                   >
-                    {book.name}
+                    {book.name} {}
                   </li>
                 ))}
             </ul>
-            {this.state.selectedBook && <BookDetails bookId={this.state.selectedBook} />}
+            { (this.state.selectedBook.length > 0) && <BookDetails bookId={this.state.selectedBook} />}
           </div>;
     }
 }
 
-export default graphql(getBooksQuery)(BookList);
+// grahql<InputProps, Response, Variables>
+export default graphql<{}, Response, {}, ChildDataProps<{}, Response>>(getBooksQuery)(BookList);
