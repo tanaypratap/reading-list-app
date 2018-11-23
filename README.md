@@ -1,4 +1,4 @@
-# graphql-apollo-demo
+# Reading List App
 Learning GraphQL Apollo with React 
 
 This app was made as a learning exercise based on the video tutorial from FreeCodeCamp.
