@@ -2,19 +2,33 @@ import React from "react";
 import { graphql, ChildDataProps } from "react-apollo";
 import { getBookQuery } from '../queries/queries';
 import { Book } from './components.interface';
+import BookNameEditor from './BookNameEditor';
 
 type Response = { book: Book }
 type InputProps = { bookId: string }
 type Variables = { id: string }
 
-class BookDetails extends React.Component<ChildDataProps<InputProps, Response, Variables>, {}> {
+const editButtonStyle = {
+    cursor: 'pointer'
+}
+
+class BookDetails extends React.Component<ChildDataProps<InputProps, Response, Variables>, { editingBookName: boolean }> {
+    state = {
+        editingBookName: false
+    }
+
+    editBookName = () => {
+        this.setState({ editingBookName: true })
+    }
+
     render() {
         const { book } = this.props.data
+        console.log('book', book)
         return (
             <div id="book-details">
                 
                { book && <div>
-                    <h2> { book.name } </h2>
+                    <h2> { book.name } <sub style={editButtonStyle} onClick={this.editBookName}> 🖉 </sub> </h2>
                     <p> Genre: <strong> {book.genre} </strong> </p>
                     <p> Author: <strong> {book.author.name} </strong> </p>
                     <h3> Books from same author </h3>
@@ -24,6 +38,12 @@ class BookDetails extends React.Component<ChildDataProps<InputProps, Response, V
                         }
                     </ul>
                 </div>}
+
+                { this.state.editingBookName &&
+                    <div className="book-name-editor"> 
+                        <BookNameEditor book={book} />
+                    </div>
+                }
             </div>
         );
     }

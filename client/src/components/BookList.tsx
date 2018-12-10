@@ -9,6 +9,11 @@ class BookList extends Component<ChildDataProps<{}, Response>, {selectedBook: st
     state = {
         selectedBook: ''
     }
+
+    // shouldComponentUpdate(nextProps:any, nextState:any) {
+    //   console.log({ nextProps, nextState })
+    //   return true
+    // }
     render() {
         const { loading, books } = this.props.data
         return <div>
