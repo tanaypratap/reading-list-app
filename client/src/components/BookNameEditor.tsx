@@ -2,17 +2,15 @@ import React from "react";
 import { withApollo } from 'react-apollo';
 import { getBookQuery, getBooksQuery, getBookFragment, justGetBookQuery } from '../queries/queries';
 
-
-// Github issue: https://github.com/apollographql/apollo-client/issues/2415
 class BookNameEditor extends React.Component<{book:any, client:any}> {
 
-    state = { bookName: this.props.book.name }
+    //state = { bookName: this.props.book.name }
 
     editBookHandler = (event: any) => {
         
         const { client } = this.props;
         const newBookName = event.target.value;
-        this.setState({ bookName: newBookName });
+        // this.setState({ bookName: newBookName });
 
         // // read all books
         // let allBooks: any = client.readQuery({
@@ -130,7 +128,7 @@ class BookNameEditor extends React.Component<{book:any, client:any}> {
                 <input 
                     type="text" 
                     onChange={this.editBookHandler}
-                    value={this.state.bookName}>
+                    value={this.props.book.name}>
                 </input>
             </div>
         )
