@@ -4,15 +4,12 @@ import { getBookQuery, getBooksQuery, getBookFragment, justGetBookQuery } from '
 
 class BookNameEditor extends React.Component<{book:any, client:any}> {
 
-    //state = { bookName: this.props.book.name }
-
     editBookHandler = (event: any) => {
         
         const { client } = this.props;
         const newBookName = event.target.value;
-        // this.setState({ bookName: newBookName });
 
-        // // read all books
+        /** Using all books query */
         // let allBooks: any = client.readQuery({
         //     query: getBooksQuery
         // })
@@ -32,13 +29,13 @@ class BookNameEditor extends React.Component<{book:any, client:any}> {
         //     data: allBooks
         // })
 
+        /** Using getBookQuery */
         const queryData: any = client.readQuery({
             query: getBookQuery,
             variables: {
                 id: this.props.book.id,
             },
         })
-        console.log({ readRes: queryData.book.name }) 
 
         const newBooksArray = queryData.book.author.books.map((book: any) => {
             if (book.id == this.props.book.id) {
@@ -58,8 +55,6 @@ class BookNameEditor extends React.Component<{book:any, client:any}> {
             }
 
         }
-        console.log({data})
-        console.log({ writeRes: data.book.name }) 
 
          client.writeQuery({
             query: getBookQuery,
@@ -77,7 +72,6 @@ class BookNameEditor extends React.Component<{book:any, client:any}> {
         //         id: this.props.book.id,
         //     },
         // })
-        // console.log({ readRes: queryData.book.name }) 
 
         // const data = {
         //     ...queryData,
@@ -87,8 +81,6 @@ class BookNameEditor extends React.Component<{book:any, client:any}> {
         //     }
 
         // }
-        // console.log({data})
-        // console.log({ writeRes: data.book.name }) 
 
         //  client.writeQuery({
         //     query: justGetBookQuery,
@@ -98,17 +90,15 @@ class BookNameEditor extends React.Component<{book:any, client:any}> {
         //     data,
         // })
 
-        // Using fragments
+        /* Using fragments created just for this */
         // let data: any = client.readFragment({
         //     id: 'Book:'+ this.props.book.id,
         //     fragment: getBookFragment,
         // })
-        // console.log({ data }) 
 
         // data = {
         //     ...data, name: newBookName
         // }
-        // console.log({ writeRes: data.name }) 
 
         //  client.writeFragment({
         //     id: 'Book:'+ this.props.book.id,
