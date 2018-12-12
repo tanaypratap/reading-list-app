@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Client Watch",
+            "command": "yarn",
+            "args": [
+                "start"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\client"
+            }
+        },
+        {
+            "label": "Server Watch",
+            "command": "npm",
+            "args": [
+                "start"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\server"
+            }
+        },
+        {
+            "label": "Watch",
+            "dependsOn": [
+                "Client Watch",
+                "Server Watch"
+            ]
+        },
+        {
+            "type": "typescript",
+            "tsconfig": "client\\tsconfig.json",
+            "option": "watch",
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        }
+    ]
+}
