@@ -25,6 +25,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "resolutions": {
+    "@types/react": "^16.7.3"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
