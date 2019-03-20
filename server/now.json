@@ -1,0 +1,16 @@
+{
+	"version": 2,
+	"name": "reading-list-app-server",
+	"builds": [
+		{
+			"src": "server.js",
+			"use": "@now/node-server"
+		}
+	],
+	"routes": [
+		{
+			"src": "/(.*)",
+			"dest": "server.js"
+		}
+	]
+}
